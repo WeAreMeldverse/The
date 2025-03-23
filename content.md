@@ -1,6 +1,7 @@
 # :memo: Classical Workflow
 
-'''
+```
+
 +---------------------------------------------------+
 |             Video Ingestion                       |
 |     (cv2.VideoCapture from SSD/cloud storage)     |
@@ -50,12 +51,12 @@
 | (CSV Logging & Data  |   | Compilation (Plots, Graphs)|
 |  Export)             |   |                           |
 +----------------------+   +---------------------------+
-'''
+```
 
 
 # :memo: Machine Learning
 
-'''
+```
 +---------------------------------------------------+
 |             Video Ingestion                       |
 |     (cv2.VideoCapture from SSD/cloud storage)     |
@@ -112,4 +113,5 @@
 |      Post-Processing & Visualization             |
 | (Drawing Boxes, CSV Generation, Video Compilation) |
 +---------------------------------------------------+
+
 ```
