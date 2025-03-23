@@ -1,98 +1,115 @@
-```
-"+---------------------------------------------------+\n"
-        "|             Video Ingestion                       |\n"
-        "|     (cv2.VideoCapture from SSD/cloud storage)     |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|            Frame Extraction                       |\n"
-        "| (Read frame-by-frame, convert frames to grayscale)|\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|         Preprocessing & Enhancement             |\n"
-        "| (Grayscale Conversion, Gaussian Blur, Frame Diff)|\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|             Blob Detection                        |\n"
-        "| (Connected Components, Labeling, RegionProps)     |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|         Filtering & Blob Merging                  |\n"
-        "| (Area Filtering, Confidence, Bounding Box,        |\n"
-        "|  Euclidean Distance)                              |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|           Classical Tracking                      |\n"
-        "| (Kalman Filter, Hungarian Algorithm)              |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|       Post-Processing & Visualization             |\n"
-        "| (Drawing Boxes, CSV Generation, Video Compilation) |\n"
-        "+---------------------------------------------------+"
-    )
+# :memo: Classical Workflow
 
-    ml_diagram = (
-        "+---------------------------------------------------+\n"
-        "|             Video Ingestion                       |\n"
-        "|     (cv2.VideoCapture from SSD/cloud storage)     |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|            Frame Extraction                       |\n"
-        "| (Read frame-by-frame, convert frames to grayscale)|\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|         Preprocessing & Enhancement             |\n"
-        "| (Grayscale Conversion, Noise Reduction, Frame Diff)|\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|       Data Preparation & Annotation               |\n"
-        "| (Manual Labeling in COCO JSON Format)             |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|         Dataset Splitting                         |\n"
-        "| (Training, Validation, Testing Sets)              |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|   Model Configuration & Training                  |\n"
-        "| (Detectron2, Faster R-CNN, Checkpointing, Hyperparams)|\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|              Inference                           |\n"
-        "| (DefaultPredictor, Confidence Threshold, NMS)     |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|         ML-Based Tracking                         |\n"
-        "| (DeepSORT Integration for Occlusion Handling)     |\n"
-        "+---------------------------------------------------+\n"
-        "                          |\n"
-        "                          v\n"
-        "+---------------------------------------------------+\n"
-        "|       Post-Processing & Visualization             |\n"
-        "| (Drawing Boxes, Metrics, CSV Generation, Video)    |\n"
-        "+---------------------------------------------------+"
+'''
++---------------------------------------------------+
+|             Video Ingestion                       |
+|     (cv2.VideoCapture from SSD/cloud storage)     |
++----------------------+----------------------------+
+                       |  
+                       v  
++----------------------+----------------------------+
+|            Frame Extraction                       |
+|     (Read frames, convert to grayscale)           |
++----------------------+----------------------------+
+                       |
+                       v
++----------------------+----------------------------+
+|       Preprocessing & Enhancement                 |
+| (Grayscale Conversion, Gaussian Blur, Frame Diff) |
++----------------------+----------------------------+
+                       |
+          +------------+-------------+
+          |                          |
+          v                          v
++----------------------+   +---------------------------+
+|   Blob Detection     |   |  Optional Analysis        |
+| (Labeling & regionprops)| (Additional filtering)   |
++----------------------+   +---------------------------+
+          |                          |
+          +------------+-------------+
+                       |
+                       v
++----------------------+----------------------------+
+|   Filtering & Blob Merging                        |
+| (Area filtering, Confidence check,                |
+|  Bounding Box & Euclidean Distance)               |
++----------------------+----------------------------+
+                       |
+                       v
++----------------------+----------------------------+
+|       Classical Tracking                          |
+| (Kalman Filter & Hungarian Algorithm for          |
+|  data association)                                |
++----------------------+----------------------------+
+                       |
+          +------------+-------------+
+          |                          |
+          v                          v
++----------------------+   +---------------------------+
+|   Post-Processing    |   | Visualization & Video     |
+| (CSV Logging & Data  |   | Compilation (Plots, Graphs)|
+|  Export)             |   |                           |
++----------------------+   +---------------------------+
+'''
+
+
+# :memo: Machine Learning
+
+'''
++---------------------------------------------------+
+|             Video Ingestion                       |
+|     (cv2.VideoCapture from SSD/cloud storage)     |
++----------------------+----------------------------+
+                       |  
+                       v  
++----------------------+----------------------------+
+|            Frame Extraction                       |
+|     (Read frames, convert to grayscale)           |
++----------------------+----------------------------+
+                       |
+                       v
++----------------------+----------------------------+
+|       Preprocessing & Enhancement                 |
+| (Grayscale Conversion, Noise Reduction,           |
+|  Frame Differencing, Thresholding, Morph Ops)     |
++----------------------+----------------------------+
+                       |
+                       v
++----------------------+----------------------------+
+|   Data Preparation & Annotation                   |
+| (Manual Labeling in COCO JSON Format)             |
++----------------------+----------------------------+
+                       |
+                       v
++----------------------+----------------------------+
+|         Dataset Splitting                         |
+| (Partition into Train, Validation, Test sets)     |
++-----------+----------+-----------+
+           |                      |
+           v                      v
++----------------------+   +---------------------------+
+|   Model Training     |   | Validation & Testing      |
+| (Detectron2, Faster  |   | (Metrics Evaluation)      |
+|  R-CNN, Checkpointing)|  |                           |
++-----------+----------+   +---------------------------+
+           |                      
+           +----------+---------------+
+                      |
+                      v
++----------------------+----------------------------+
+|         Inference                                |
+| (DefaultPredictor, Confidence Threshold, NMS)    |
++----------------------+----------------------------+
+                      |
+                      v
++----------------------+----------------------------+
+|        ML-Based Tracking                         |
+| (DeepSORT Integration for robust tracking)       |
++----------------------+----------------------------+
+                      |
+                      v
++----------------------+----------------------------+
+|      Post-Processing & Visualization             |
+| (Drawing Boxes, CSV Generation, Video Compilation) |
++---------------------------------------------------+
 ```
